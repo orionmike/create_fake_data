@@ -1,9 +1,14 @@
 # Create fake data for database
 
-Скрипт для создания фейковых данных для заполнения базы данных.
+Создание фейковых данных для заполнения базы.
 
-### Модели:
+### ORM Models:
 
 - User
+
 - Product
 - CategoryProduct
+
+- CategoryPost
+- Tag
+- Post

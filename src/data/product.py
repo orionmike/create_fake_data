@@ -1,19 +1,16 @@
 
-
 import random
-from unicodedata import category
 from faker import Faker
-from pandas import describe_option
 from data.utils import get_random_number, get_slug
 from database.database import session_maker
-from database.models import CategoryProduct, Product
+from database.models_product import CategoryProduct, Product
 
 
-def create_category_list(user_count: int, delete=None) -> None:
+def create_category_list(user_count: int, delete=True) -> None:
 
     with session_maker() as session:
 
-        if delete:
+        if not delete:
             session.query(CategoryProduct).delete()
             session.commit()
 
@@ -33,11 +30,11 @@ def create_category_list(user_count: int, delete=None) -> None:
         session.commit()
 
 
-def create_product_list(product_count: int, delete=None) -> None:
+def create_product_list(product_count: int, delete=True) -> None:
 
     with session_maker() as session:
 
-        if delete:
+        if not delete:
             session.query(Product).delete()
             session.commit()
 
@@ -55,7 +52,7 @@ def create_product_list(product_count: int, delete=None) -> None:
             product.name = f'Товар {get_random_number(4)}'
             product.slug = get_slug(product.name)
 
-            product.category = random_category.id
+            product.category_id = random_category.id
             product.price = random.randint(100, 1000)
             product.is_published = True
             product.description = faker.paragraph(nb_sentences=1)

@@ -7,7 +7,7 @@ from faker import Faker
 
 from data.utils import get_random_string, get_slug
 from database.database import session_maker
-from database.models import User
+from database.models_user import User
 
 GENDER_TUPLE = ('m', 'f')
 
@@ -27,11 +27,11 @@ def get_email(person: tuple) -> str:
     return f'{get_slug(person[0])}_{get_slug(person[1])}@{get_random_string(3,5)}.{get_random_string(2,3)}'
 
 
-def create_user_list(user_count: int, delete=None) -> None:
+def create_user_list(user_count: int, delete=True) -> None:
 
     with session_maker() as session:
 
-        if delete:
+        if not delete:
             session.query(User).delete()
             session.commit()
 
